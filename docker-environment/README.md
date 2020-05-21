@@ -153,7 +153,9 @@ end
 
 
 - 卸载之前的docker
-  	sudo yum remove docker \
+
+  ```cmd
+  $ sudo yum remove docker \
                     docker-client \
                     docker-client-latest \
                     docker-common \
@@ -161,21 +163,41 @@ end
                     docker-latest-logrotate \
                     docker-logrotate \
                     docker-engine
-                    
+  ```
+
 - 安装必要的依赖
-  	sudo yum install -y yum-utils \
+
+  ````cmd
+  $ sudo yum install -y yum-utils \
       device-mapper-persistent-data \
       lvm2
-      
+  ````
+
 - 设置docker仓库
-  	sudo yum-config-manager \
-        --add-repo \
-        https://download.docker.com/linux/centos/docker-ce.repo
+
+  ````cmd
+  $ sudo yum-config-manager \
+      --add-repo \
+      https://download.docker.com/linux/centos/docker-ce.repo
+  ````
+
 - 安装docker
-  	sudo yum install -y docker-ce docker-ce-cli containerd.io
+
+  ```cmd
+  $ sudo yum install -y docker-ce docker-ce-cli containerd.io
+  ```
+
 - 启动docker
-  	sudo systemctl start docker
+
+  ````cmd
+  $ sudo systemctl start docker
+  ````
+
 - 测试docker安装是否成功
-  	sudo docker run hello-world
+
+  ````cmd
+  $ sudo docker run hello-world
+  ````
 
 >  [访问这个地址,添加阿里云镜像加速器:https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors]
+
