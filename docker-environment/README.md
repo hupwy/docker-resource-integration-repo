@@ -4,7 +4,7 @@
 
 > `采用vagrant+virtual box`
 
-安装环境是环境是
+安装环境所需软件：
 
 - `win10 64位`
 - `VirtualBox-6.0.12-133076-Win`
