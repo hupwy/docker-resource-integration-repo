@@ -1,6 +1,4 @@
-## Docker 笔记
-
-### 1 在Win10上准备centos7
+## 1 在Win10上准备centos7
 
 > `采用vagrant+virtual box`
 
@@ -12,18 +10,18 @@
 - `centos7`
 - `XShell6`
 
-#### 1.1 下载安装vagrant
+### 1.1 下载安装vagrant
 
 - 访问Vagrant官网[https://www.vagrantup.com/]
 - 下载对应的版本安装
 - 命令行输入vagrant，测试是否安装成功
 
-#### 1.2 下载安装virtual box
+### 1.2 下载安装virtual box
 
 - VirtualBox官网[https://www.virtualbox.org/]
 - 下载对应的操作系统版本安装
 
-#### 1.3 安装centos7
+### 1.3 安装centos7
 
 - 创建centos7文件夹，并进入其中[目录全路径不要有中文字符]
 - 在此目录下打开cmd，运行`vagrant init centos/7`
@@ -46,7 +44,7 @@
   - Vagrantfile中也可以写脚本命令，使得centos7更加丰富
      但是要注意，修改了Vagrantfile，要想使正常运行的centos7生效，必须使用`vagrant reload`
 
-#### 1.4 Xshell连接centos7
+### 1.4 Xshell连接centos7
 
 按下列步骤操作：
 - `vagrant ssh`，进入到虚拟机中
@@ -56,7 +54,7 @@
 - `systemctl restart sshd`
 - Xshell里使用账号root/root进行登录
 
-#### 1.5 Vagrantfile通用写法
+### 1.5 Vagrantfile通用写法
 
 ```ruby
 # -*- mode: ruby -*-
@@ -136,7 +134,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-#### 1.6 box的打包分发
+### 1.6 box的打包分发
 
 - 退出虚拟机[`vagrant halt`]
 - 通过打包命令[`vagrant package --output docker-centos7.box`]，等到docker-centos7.box
@@ -145,7 +143,7 @@ end
 - 新建文件夹【docker-centos7】里，执行下列命令:
   	`vagrant init docker-centos7`根据Vagrantfile启动虚拟机[vagrant up]
 
-### 2 安装docker
+## 2 安装docker
 
 > docker官网：https://docs.docker.com/install/linux/docker-ce/centos/
 
