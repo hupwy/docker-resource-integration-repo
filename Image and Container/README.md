@@ -137,7 +137,7 @@ EXPOSE 3306
 
   ````dockerfile
   FROM openjdk:8 
-  MAINTAINER itcrazy2016 
+  MAINTAINER superalbertini 
   LABEL name="dockerfile-demo" version="1.0" author="superalbertini" 
   COPY demo-0.0.1-SNAPSHOT.jar dockerfile-image.jar 
   CMD ["java","-jar","dockerfile-image.jar"]
