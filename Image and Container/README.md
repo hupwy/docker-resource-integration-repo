@@ -1,4 +1,4 @@
-## 1 深入探讨Image
+## 1 Image
 
 >  说白了，image就是由一层一层的layer组成的。
 
@@ -116,7 +116,7 @@ ENTRYPOINT ["docker-entrypoint.sh"]
 EXPOSE 3306
 ````
 
-### 1.3 Dockerfifile实战Spring Boot项目
+### 1.3 Dockerfifile实战
 
 - 创建一个Spring Boot项目
 
@@ -145,26 +145,26 @@ EXPOSE 3306
 
 - 基于Dockerfile构建镜像 
 
-  ```cmd
-  docker build -t test-docker-image .
+  ```shell
+  $docker build -t test-docker-image .
   ```
 
 - 基于image创建container
 
-  ```cmd
-  docker run -d --name demo01 -p 6666:8080 test-docker-image 
+  ```shell
+  $docker run -d --name demo01 -p 6666:8080 test-docker-image 
   ```
 
 - 查看启动日志
 
-  ````cmd
-  docker logs demo01
+  ````shell
+  $docker logs demo01
   ````
 
 - 宿主机上访问`curl localhost:6666/dockerfile`
 
   ```tex
-   hello docker 
+  hello docker 
   ```
 
 
@@ -179,8 +179,8 @@ EXPOSE 3306
 
 - 在docker机器上登录
 
-  ````cmd
-  docker login
+  ````shell
+  $docker login
   ````
 
 - 输入用户名和密码
@@ -191,18 +191,18 @@ EXPOSE 3306
 
 - 给image重命名，并删除掉原来的
 
-  ````cmd
-  docker tag ubuntu-bigdata-cluster-base superalbertini/ubuntu-bigdata-cluster-base
-  docker rmi -f superalbertini/ubuntu-bigdata-cluster-base
+  ````shell
+  $docker tag ubuntu-bigdata-cluster-base superalbertini/ubuntu-bigdata-cluster-base
+  $docker rmi -f superalbertini/ubuntu-bigdata-cluster-base
   ````
 
 - 再次推送，刷新hub.docker.com后台，发现成功
 
 - 别人下载，并且运行
 
-  ```cmd
-  docker pull superalbertini/ubuntu-bigdata-cluster-base
-  docker run -d --name demo01 -p 6661:8080 superalbertini/ubuntu-bigdata-cluster-base
+  ```shell
+  $docker pull superalbertini/ubuntu-bigdata-cluster-base
+  $docker run -d --name demo01 -p 6661:8080 superalbertini/ubuntu-bigdata-cluster-base
   ```
 
 #### 1.4.2 阿里云docker hub
@@ -213,8 +213,8 @@ EXPOSE 3306
 
 - 登录阿里云Docker Registry
 
-```cmd
-$ sudo docker login --username=superalbertini registry.cn-hangzhou.aliyuncs.com
+```shell
+$sudo docker login --username=superalbertini registry.cn-hangzhou.aliyuncs.com
 ```
 
 用于登录的用户名为阿里云账号全名，密码为开通服务时设置的密码。
@@ -223,23 +223,23 @@ $ sudo docker login --username=superalbertini registry.cn-hangzhou.aliyuncs.com
 
 - 从Registry中拉取镜像
 
-```cmd
-$ sudo docker pull registry.cn-hangzhou.aliyuncs.com/docker-registry-peter/k8s-repo:[镜像版本号]
+```shell
+$sudo docker pull registry.cn-hangzhou.aliyuncs.com/docker-registry-peter/k8s-repo:[镜像版本号]
 ```
 
 - 将镜像推送到Registry
 
-```cmd
-$ sudo docker login --username=superalbertini registry.cn-hangzhou.aliyuncs.com
+```shell
+$sudo docker login --username=superalbertini registry.cn-hangzhou.aliyuncs.com
 
-$ sudo docker tag [ImageId] registry.cn-hangzhou.aliyuncs.com/docker-registry-peter/k8s-repo-images:[镜像版本号]
+$sudo docker tag [ImageId] registry.cn-hangzhou.aliyuncs.com/docker-registry-peter/k8s-repo-images:[镜像版本号]
 
-$ sudo docker push registry.cn-hangzhou.aliyuncs.com/docker-registry-peter/k8s-repo-images:[镜像版本号]
+$sudo docker push registry.cn-hangzhou.aliyuncs.com/docker-registry-peter/k8s-repo-images:[镜像版本号]
 ```
 
 请根据实际镜像信息替换示例中的[ImageId]和[镜像版本号]参数。
 
-#### 1.4.3 搭建自己的Docker Harbor
+#### 1.4.3 搭建Docker Harbor
 
 - 访问github上的harbor项目 
 
@@ -260,7 +260,7 @@ $ sudo docker push registry.cn-hangzhou.aliyuncs.com/docker-registry-peter/k8s-r
 - 安装harbor，需要一些时间
 
   ```shell
-  sh install.sh
+  $sh install.sh
   ```
 
 - 浏览器访问服务器ip，输入用户名和密码即可 
@@ -270,36 +270,181 @@ $ sudo docker push registry.cn-hangzhou.aliyuncs.com/docker-registry-peter/k8s-r
 - 查看本地image列表 
 
   ```shell
-  $ docker images 
-  $ docker image ls 
+  $docker images 
+  $docker image ls 
   ```
 
 - 获取远端镜像
 
   ````shell
-  $ docker pull
+  $docker pull
   ````
 
 - 删除镜像
 
   ````shell
-  $ docker image rm imageid 
-  $ docker rmi -f imageid 
-  $ docker rmi -f $(docker image ls) 删除所有镜像 
+  $docker image rm imageid 
+  $docker rmi -f imageid 
+  $docker rmi -f $(docker image ls) 删除所有镜像 
   ````
 
 - 运行镜像 
 
   ````shell
-  $ docker run image
+  $docker run image
   ````
 
 - 发布镜像
 
   ````shell
-  $ docker push
+  $docker push
   ````
 
-### 2 深入探讨Container
+## 2 Container
 
 > 既然container是由image运行起来的，那么是否可以理解为container和image有某种关系？
+
+![image-20200525094639381](image-20200525094639381.png)
+
+> 注意:其实可以理解为container只是基于image之后的layer而已，也就是可以通过docker run image创建出一个container出来。
+
+### 2.1 container到image
+
+> 可以通过docker commit命令基于一个container重新生成一个image，但是一般不建议这么做，因为这样做的话完全不知道image是如何生成的。
+
+### 2.2 container的资源限制
+
+> `查看资源情况` ：docker stats
+
+#### 2.2.1 container的内存限制
+
+```shell
+--memory Memory limit 
+```
+
+
+如果不设置 --memory-swap，其大小和memory一样 
+
+``` shell
+$docker run -d --memory 100M --name tomcat1 tomcat
+```
+
+#### 2.2.2 container的CPU限制
+
+```shell
+--cpu-shares 权重 
+$docker run -d --cpu-shares 10 --name tomcat2 tomcat
+```
+
+#### 2.2.3 图形化资源监控
+
+> https://github.com/weaveworks/scope
+
+````shell
+$sudo curl -L git.io/scope -o /usr/local/bin/scope 
+$sudo chmod a+x /usr/local/bin/scope 
+$scope launch 39.100.39.63
+````
+
+````shell
+# 停止scope scope stop
+$scope stop
+
+# 同时监控两台机器，在两台机器中分别执行如下命令
+$scope launch ip1 ip2
+````
+
+### 2.3 container常见操作
+
+1. 根据镜像创建容器
+
+   ```shell
+   $docker run -d --name -p 9090:8080 my-tomcat tomcat
+   ```
+
+2. 查看运行中的container
+
+   ````shell
+   $docker ps
+   ````
+
+3. 查看所有的container[包含退出的]
+
+   ````shell
+   $docker ps -a
+   ````
+
+4. 删除container
+
+   ````shell
+   $docker rm containerid 
+   $docker rm -f $(docker ps -a) 删除所有container
+   ````
+
+5. 进入到一个container中
+
+   ````shell
+   $docker exec -it container bash
+   ````
+
+6. 根据container生成image 
+
+   ````shell
+   $docker commit
+   ````
+
+7. 查看某个container的日志
+
+   ````shell
+   $docker logs container
+   ````
+
+8. 查看容器资源使用情况
+
+   ````shell
+   $docker stats
+   ````
+
+9. 查看容器详情信息
+
+   ````shell
+   $docker inspect container
+   ````
+
+10. 停止/启动容器
+
+    ````shell
+    $docker stop/start container
+    ````
+
+## 3 底层技术支持
+
+> 注意：Docker是基于Linux Kernel的Namespace、CGroups、UnionFileSystem等技术封装成的一种自定义容器格式，从而提供一套虚拟运行环境。
+
+**Namespace**：用来做隔离的，际上修改了应用进程看待整个计算机“视图”，即它的“视线”被操作系统做了限制，只能“看到”某些指定的内容,比如pid[进程]、net[网络]、mnt[挂载点]等。
+
+
+
+**CGroups**: Controller Groups用来做资源限制，它最主要的作用，就是限制一个进程组能够使用的资源上限，包括 CPU、内存、磁盘、网络带宽等等。
+
+
+
+**Union file systems**：也叫 UnionFS，最主要的功能是将多个不同位置的目录联合挂载（union mount）到同一个目录下。
+
+- 比如，我现在有两个目录 A 和 B，它们分别有两个文件：
+
+  ````shell
+  $ tree
+  .
+  ├── A
+  │  ├── a
+  │  └── x
+  └── B
+    ├── b
+    └── x
+  ````
+
+  
+
+
+
