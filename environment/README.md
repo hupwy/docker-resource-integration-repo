@@ -152,7 +152,7 @@ end
 
 - 卸载之前的docker
 
-  ```cmd
+  ```shell
   $ sudo yum remove docker \
                     docker-client \
                     docker-client-latest \
@@ -165,7 +165,7 @@ end
 
 - 安装必要的依赖
 
-  ````cmd
+  ````shell
   $ sudo yum install -y yum-utils \
       device-mapper-persistent-data \
       lvm2
@@ -173,7 +173,7 @@ end
 
 - 设置docker仓库
 
-  ````cmd
+  ````shell
   $ sudo yum-config-manager \
       --add-repo \
       https://download.docker.com/linux/centos/docker-ce.repo
@@ -181,19 +181,19 @@ end
 
 - 安装docker
 
-  ```cmd
+  ```shell
   $ sudo yum install -y docker-ce docker-ce-cli containerd.io
   ```
 
 - 启动docker
 
-  ````cmd
+  ````shell
   $ sudo systemctl start docker
   ````
 
 - 测试docker安装是否成功
 
-  ````cmd
+  ````shell
   $ sudo docker run hello-world
   ````
 
