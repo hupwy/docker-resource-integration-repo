@@ -116,7 +116,7 @@ ENTRYPOINT ["docker-entrypoint.sh"]
 EXPOSE 3306
 ````
 
-### 1.3 Dockerfifile实战
+### 1.3 Dockerfile实战
 
 - 创建一个Spring Boot项目
 
