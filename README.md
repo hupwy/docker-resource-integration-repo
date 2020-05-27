@@ -1,5 +1,3 @@
-## Docker 笔记
-
 ### 1 在Win10上准备centos7
 
 > `采用vagrant+virtual box`
