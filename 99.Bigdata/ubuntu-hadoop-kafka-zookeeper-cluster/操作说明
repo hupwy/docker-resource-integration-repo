@@ -1,0 +1,11 @@
+创建docker镜像：
+    docker build -t ubuntu-hadoop-kafka-zookeeper-base .
+    docker build -t ubuntu-hadoop-kafka-zookeeper-namenode .
+    docker build -t ubuntu-hadoop-kafka-zookeeper-datanode .
+
+启动容器(指定网卡 ip)：
+    docker run -itd --net cluster-net -p 10001:22 -h namenode --name namenode ubuntu-hadoop-kafka-zookeeper-namenode /bin/bash
+    docker run -itd --net cluster-net -p 10002:22 -h datanode1 --name datanode1 ubuntu-hadoop-kafka-zookeeper-datanode /bin/bash
+    docker run -itd --net cluster-net -p 10003:22 -h datanode2 --name datanode2 ubuntu-hadoop-kafka-zookeeper-datanode /bin/bash
+
+根据【hadoop集群配置说明手册】修改配置文件
