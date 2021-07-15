@@ -304,7 +304,7 @@ $sudo docker push registry.cn-hangzhou.aliyuncs.com/docker-registry-peter/k8s-re
 
 > 既然container是由image运行起来的，那么是否可以理解为container和image有某种关系？
 
-![image-20200525094639381](image-20200525094639381.png)
+![image-20200525094639381](images/image-20200525094639381.png)
 
 > 注意:其实可以理解为container只是基于image之后的layer而已，也就是可以通过docker run image创建出一个container出来。
 
@@ -423,11 +423,7 @@ $scope launch ip1 ip2
 
 **Namespace**：用来做隔离的，际上修改了应用进程看待整个计算机“视图”，即它的“视线”被操作系统做了限制，只能“看到”某些指定的内容,比如pid[进程]、net[网络]、mnt[挂载点]等。
 
-
-
 **CGroups**: Controller Groups用来做资源限制，它最主要的作用，就是限制一个进程组能够使用的资源上限，包括 CPU、内存、磁盘、网络带宽等等。
-
-
 
 **Union file systems**：也叫 UnionFS，最主要的功能是将多个不同位置的目录联合挂载（union mount）到同一个目录下。
 
